@@ -1,0 +1,71 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| OneBillBankDB      |
+| Training           |
+| mysql              |
+| onebill            |
+| onebill1           |
+| onebill2           |
+| onebillStudent     |
+| performance_schema |
+| sys                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use OneBillBankDB;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> describe Employee;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| empid     | int(11)     | NO   | PRI | NULL    |       |
+| empname   | varchar(50) | YES  |     | NULL    |       |
+| empsalary | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-------+---------+-----------+
+| empid | empname | empsalary |
++-------+---------+-----------+
+|     1 | Sundeep |    450000 |
++-------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from Employee;
++-------+---------+-----------+
+| empid | empname | empsalary |
++-------+---------+-----------+
+|     1 | Sundeep |    450000 |
+|     2 | Kishan  |    550000 |
++-------+---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-------+---------+-----------+
+| empid | empname | empsalary |
++-------+---------+-----------+
+|     1 | Sundeep |    450000 |
+|     2 | Kishan  |    550000 |
+|     5 | Mugen   |    450000 |
++-------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employee;
++-------+---------+-----------+
+| empid | empname | empsalary |
++-------+---------+-----------+
+|     1 | Sundeep |    450000 |
+|     2 | Kishan  |    550000 |
+|     4 | Ambanai |     70000 |
+|     5 | Mugen   |    450000 |
+|     6 | karthi  |    700000 |
++-------+---------+-----------+
+5 rows in set (0.00 sec)
+
