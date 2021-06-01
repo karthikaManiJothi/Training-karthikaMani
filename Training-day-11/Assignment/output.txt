@@ -1,0 +1,440 @@
+---Having------
+mysql> create table Student(sid int primary key, name varchar(50),age int,gender varchar(20));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> describe Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| sid    | int(11)     | NO   | PRI | NULL    |       |
+| name   | varchar(50) | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
+| gender | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Student;
++-----+----------+------+--------+
+| sid | name     | age  | gender |
++-----+----------+------+--------+
+|   1 | Karthika |   17 | Female |
+|   2 | Mohit    |   18 | Male   |
+|   3 | bhavana  |   17 | Female |
+|   4 | devi     |   18 | Female |
+|   5 | Rohan    |   18 | Male   |
+|   6 | Rohit    |   17 | Male   |
+|   7 | Raina    |   17 | Male   |
++-----+----------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select age,count(sid)as Count from Student group by gender having count(age)>2;
++------+-------+
+| age  | Count |
++------+-------+
+|   17 |     3 |
+|   18 |     4 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from office;
++------------+--------------+--------+----------+----------+-------+---------+
+| officecode | city         | phone  | address1 | address2 | state | country |
++------------+--------------+--------+----------+----------+-------+---------+
+|          1 | San Francico | 423423 | sdsd     | sdsd     | CA    | USA     |
+|          2 | San Diego    | 423423 | sdsd     | sdsd     | CA    | USA     |
+|          3 | Middletown   | 420023 | sdsd     | sdsd     | NY    | UK      |
++------------+--------------+--------+----------+----------+-------+---------+
+3 rows in set (0.01 sec)
+
+mysql> select country ,count(country) as count from office group by country  having count(country)>=2;
++---------+-------+
+| country | count |
++---------+-------+
+| USA     |     2 |
++---------+-------+
+1 row in set (0.01 sec)
+
+
+2.------delete and truncate----------
+mysql> select * from Student;
++-----+----------+------+--------+
+| sid | name     | age  | gender |
++-----+----------+------+--------+
+|   1 | Karthika |   17 | Female |
+|   2 | Mohit    |   18 | Male   |
+|   3 | bhavana  |   17 | Female |
+|   4 | devi     |   18 | Female |
+|   5 | Rohan    |   18 | Male   |
+|   6 | Rohit    |   17 | Male   |
+|   7 | Raina    |   17 | Male   |
++-----+----------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> delete from Student where sid=5;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from Student;
++-----+----------+------+--------+
+| sid | name     | age  | gender |
++-----+----------+------+--------+
+|   1 | Karthika |   17 | Female |
+|   2 | Mohit    |   18 | Male   |
+|   3 | bhavana  |   17 | Female |
+|   4 | devi     |   18 | Female |
+|   6 | Rohit    |   17 | Male   |
+|   7 | Raina    |   17 | Male   |
++-----+----------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> truncate table Student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from Student;
+Empty set (0.00 sec)
+
+mysql> describe Student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| sid    | int(11)     | NO   | PRI | NULL    |       |
+| name   | varchar(50) | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
+| gender | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+3.---------third highest experience-----------
+
+mysql> select * from Employee;
++------+---------+--------------------+-------------+------------+------------+--------+------------+------+-------------------+
+| emid | name    | email              | mobile      | doj        | dob        | gender | experience | dept | designation       |
++------+---------+--------------------+-------------+------------+------------+--------+------------+------+-------------------+
+|    1 | Rahul   | rahul123@gmail.com | 9487209465  | 2021-04-12 | 1980-12-30 | m      |          6 | A    | Software_Engineer |
+|    2 | Rohit   | rohit@gmail.com    | 8300629465  | 2020-12-04 | 1983-12-30 | m      |          7 | B    | Tester            |
+|    3 | Rajath  | kavin@gmail.com    | 94465789465 | 2020-02-04 | 1994-03-07 | m      |         10 | B    | Tester            |
+|    4 | Rakesh  | karthika@gmail.com | 9446578565  | 2000-02-04 | 1994-02-07 | m      |          3 | A    | softwareEngineer  |
+|    5 | Reshma  | reshma@gmail.com   | 77346568505 | 2009-08-02 | 1999-08-04 | f      |          2 | B    | softwareEngineer  |
+|    6 | Rebecca | rr@gmail.com       | 9446578565  | 2018-06-09 | 1990-09-09 | f      |          6 | C    | Admin             |
++------+---------+--------------------+-------------+------------+------------+--------+------------+------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select name,max(experience) as Third_highest_experinced from Employee where experience <(Select max(experience) from Employee where experience <(select max(experience) from Employee));
++-------+--------------------------+
+| name  | Third_highest_experinced |
++-------+--------------------------+
+| Rahul |                        6 |
++-------+--------------------------+
+1 row in set (0.00 sec)
+
+
+4. ----------FULL JOIN ---------------
+mysql> show tables;
++--------------------+
+| Tables_in_Training |
++--------------------+
+| Employee           |
+| Student            |
+| customer           |
+| department         |
+| item               |
+| office             |
+| orders             |
+| person_info        |
+| sales              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-----+---------------+-------------+
+| cid | customer_name | designation |
++-----+---------------+-------------+
+|   1 | Rohan         | Engineer    |
+|   2 | Raj           | Tester      |
+|   3 | Rohit         | Analyst     |
+|   4 | Nandan        | HR          |
++-----+---------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from orders;
++-----+--------+------+
+| oid | amount | cid  |
++-----+--------+------+
+| 601 | 10000  |    1 |
+| 602 | 20000  |    4 |
+| 603 | 15000  |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select customer.customer_name ,customer_designation,orders.oid,orders.amount from customer full join orders on customer.cid=orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer.customer_name' in 'field list'
+mysql> select customer_name ,customer_designation,oid,amount from customer full join orders on customer.cid=orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer_designation' in 'field list'
+mysql> select customer_name ,designation,oid,amount from customer full join orders on customer.cid=orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer.cid' in 'on clause'
+mysql> select customer.customer_name ,customer.designation,orders.oid,orders.amount from customer full join orders on customer.cid=orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer.customer_name' in 'field list'
+mysql> select customer_name ,designation,oid,amount from customer FULL JOIN orders on customer.cid =orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer.cid' in 'on clause'
+mysql> select customer.cid,customer.customer_name,orders.oid,orders.amount,orders.cid from customer FULL JOIN orders on customer.cid =orders.cid;
+ERROR 1054 (42S22): Unknown column 'customer.cid' in 'field list'
+mysql> select * from customer left join orders on customer.cid=orders.cid union select * from customer right join orders on customer.cid =orders.cid;
++------+---------------+-------------+------+--------+------+
+| cid  | customer_name | designation | oid  | amount | cid  |
++------+---------------+-------------+------+--------+------+
+|    1 | Rohan         | Engineer    |  601 | 10000  |    1 |
+|    4 | Nandan        | HR          |  602 | 20000  |    4 |
+|    2 | Raj           | Tester      |  603 | 15000  |    2 |
+|    3 | Rohit         | Analyst     | NULL | NULL   | NULL |
++------+---------------+-------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+
+--------Procedure---------
+
+mysql> select * from office;
++------------+--------------+--------+----------+----------+-------+---------+
+| officecode | city         | phone  | address1 | address2 | state | country |
++------------+--------------+--------+----------+----------+-------+---------+
+|          1 | San Francico | 423423 | sdsd     | sdsd     | CA    | USA     |
+|          2 | San Diego    | 423423 | sdsd     | sdsd     | CA    | USA     |
+|          3 | Middletown   | 420023 | sdsd     | sdsd     | NY    | UK      |
++------------+--------------+--------+----------+----------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table office add column status varchar(50);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from office;
++------------+--------------+--------+----------+----------+-------+---------+--------+
+| officecode | city         | phone  | address1 | address2 | state | country | status |
++------------+--------------+--------+----------+----------+-------+---------+--------+
+|          1 | San Francico | 423423 | sdsd     | sdsd     | CA    | USA     | NULL   |
+|          2 | San Diego    | 423423 | sdsd     | sdsd     | CA    | USA     | NULL   |
+|          3 | Middletown   | 420023 | sdsd     | sdsd     | NY    | UK      | NULL   |
++------------+--------------+--------+----------+----------+-------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> update office set status ='shipped' where officecode =1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update office set status ='in progress' where officecode =2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update office set status ='shipped' where officecode =3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from office;
++------------+--------------+--------+----------+----------+-------+---------+-------------+
+| officecode | city         | phone  | address1 | address2 | state | country | status      |
++------------+--------------+--------+----------+----------+-------+---------+-------------+
+|          1 | San Francico | 423423 | sdsd     | sdsd     | CA    | USA     | shipped     |
+|          2 | San Diego    | 423423 | sdsd     | sdsd     | CA    | USA     | in progress |
+|          3 | Middletown   | 420023 | sdsd     | sdsd     | NY    | UK      | shipped     |
++------------+--------------+--------+----------+----------+-------+---------+-------------+
+3 rows in set (0.01 sec)
+
+mysql> delimiter $$
+mysql> create procedure getordercount(
+    -> in orderstatus varchar(20),
+    -> out total int
+    -> )
+    -> begin
+    -> select count(officecode)
+    -> into total from office
+    -> where status=orderstatus;
+    -> end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter;
+    -> delimiter ;
+    -> call getordercount('shipped',@total);
+    -> select @total;
+    -> delimiter ;
+    -> ;
+    -> ;;
+    -> Terminal close -- exit!
+Aborted
+mysql> call getordercount('shipped',@total);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @total;
++--------+
+| @total |
++--------+
+|      2 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create procedure countersetting(
+    -> inout counter int,
+    -> in increment int
+    -> )
+    -> begin
+    -> set counter =counter + increment;
+    -> end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set @counter =1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call countersetting(@counter,1);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> call countersetting(@counter,4);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @counter;
++----------+
+| @counter |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+
+
+-----------Trigger--------
+
+mysql> select * from item;
++----+----------+----------+-------+-----------+
+| id | itemdesc | quantity | price | category  |
++----+----------+----------+-------+-----------+
+|  1 | Perfume  |      100 |   100 | cosmetics |
+|  2 | Marie    |      100 |    10 | snacks    |
++----+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales;
++-----+------+--------+-------+-------+
+| sid | id   | qtsold | price | total |
++-----+------+--------+-------+-------+
+| 101 |    2 |     10 |     0 |     0 |
+| 102 |    3 |     10 |    20 |   200 |
+| 103 |    3 |     50 |    40 |  2000 |
+| 104 |    3 |     20 |    20 |   400 |
+| 105 |    2 |     10 |    20 |   200 |
++-----+------+--------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into sales values(106,4,5,10,0);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from sales;
++-----+------+--------+-------+-------+
+| sid | id   | qtsold | price | total |
++-----+------+--------+-------+-------+
+| 101 |    2 |     10 |     0 |     0 |
+| 102 |    3 |     10 |    20 |   200 |
+| 103 |    3 |     50 |    40 |  2000 |
+| 104 |    3 |     20 |    20 |   400 |
+| 105 |    2 |     10 |    20 |   200 |
+| 106 |    4 |      5 |    10 |    50 |
++-----+------+--------+-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create trigger t3
+    -> after insert
+    -> on sales
+    -> for each row
+    -> begin
+    -> update item set quantity =quantity -new.qtsold
+    -> where id=new.id;
+    -> end$$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into sales values(107,1,5,10,0);
+    -> delimiter ;
+    -> Terminal close -- exit!
+Aborted
+mysql> select * from item;
++----+----------+----------+-------+-----------+
+| id | itemdesc | quantity | price | category  |
++----+----------+----------+-------+-----------+
+|  1 | Perfume  |       90 |   100 | cosmetics |
+|  2 | Marie    |      100 |    10 | snacks    |
++----+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales;
++-----+------+--------+-------+-------+
+| sid | id   | qtsold | price | total |
++-----+------+--------+-------+-------+
+| 101 |    2 |     10 |     0 |     0 |
+| 102 |    3 |     10 |    20 |   200 |
+| 103 |    3 |     50 |    40 |  2000 |
+| 104 |    3 |     20 |    20 |   400 |
+| 105 |    2 |     10 |    20 |   200 |
+| 106 |    4 |      5 |    10 |    50 |
+| 107 |    1 |     10 |    20 |   200 |
++-----+------+--------+-------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into sales values(108,2,10,20,0);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from item;
++----+----------+----------+-------+-----------+
+| id | itemdesc | quantity | price | category  |
++----+----------+----------+-------+-----------+
+|  1 | Perfume  |       90 |   100 | cosmetics |
+|  2 | Marie    |       90 |    10 | snacks    |
++----+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales;
++-----+------+--------+-------+-------+
+| sid | id   | qtsold | price | total |
++-----+------+--------+-------+-------+
+| 101 |    2 |     10 |     0 |     0 |
+| 102 |    3 |     10 |    20 |   200 |
+| 103 |    3 |     50 |    40 |  2000 |
+| 104 |    3 |     20 |    20 |   400 |
+| 105 |    2 |     10 |    20 |   200 |
+| 106 |    4 |      5 |    10 |    50 |
+| 107 |    1 |     10 |    20 |   200 |
+| 108 |    2 |     10 |    20 |   200 |
++-----+------+--------+-------+-------+
+8 rows in set (0.00 sec)
+
+mysql> insert into sales values(109,1,5,10,0);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from item;
++----+----------+----------+-------+-----------+
+| id | itemdesc | quantity | price | category  |
++----+----------+----------+-------+-----------+
+|  1 | Perfume  |       85 |   100 | cosmetics |
+|  2 | Marie    |       90 |    10 | snacks    |
++----+----------+----------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from sales;
++-----+------+--------+-------+-------+
+| sid | id   | qtsold | price | total |
++-----+------+--------+-------+-------+
+| 101 |    2 |     10 |     0 |     0 |
+| 102 |    3 |     10 |    20 |   200 |
+| 103 |    3 |     50 |    40 |  2000 |
+| 104 |    3 |     20 |    20 |   400 |
+| 105 |    2 |     10 |    20 |   200 |
+| 106 |    4 |      5 |    10 |    50 |
+| 107 |    1 |     10 |    20 |   200 |
+| 108 |    2 |     10 |    20 |   200 |
+| 109 |    1 |      5 |    10 |    50 |
++-----+------+--------+-------+-------+
+9 rows in set (0.01 sec)
+
